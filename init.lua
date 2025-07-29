@@ -23,8 +23,9 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+vim.keymap.set('n', '<leader>t', ':split +terminal<cr>', { desc = "Open terminal at the bottom" })
 vim.keymap.set('n', '<Esc>', ':nohlsearch<cr>')
-vim.keymap.set('n', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- LSP and completion config
 
@@ -45,7 +46,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 vim.cmd("set completeopt+=noselect")
 
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, { desc = "Format buffer with LSP" })
+vim.keymap.set("n", "<leader>bf", vim.lsp.buf.format, { desc = "Format buffer with LSP" })
 vim.keymap.set("n", "<leader>ef", ":w<cr>:!herb-format %<cr>", { desc = "Format ERB with Herb" })
 
 -- Plugins
@@ -71,6 +72,7 @@ vim.keymap.set("n", "<leader>gg", ":LazyGit<cr>")
 vim.pack.add({
   "https://github.com/echasnovski/mini.ai",
   "https://github.com/echasnovski/mini.pick",
+  "https://github.com/echasnovski/mini.files",
   "https://github.com/echasnovski/mini.surround",
   "https://github.com/echasnovski/mini.pairs",
   "https://github.com/echasnovski/mini.notify",
@@ -78,6 +80,10 @@ vim.pack.add({
 require("mini.ai").setup()
 require("mini.surround").setup()
 require("mini.pairs").setup()
+require("mini.files").setup()
+vim.keymap.set("n", "<leader>f", function()
+  if not MiniFiles.close() then MiniFiles.open() end
+end)
 require("mini.pick").setup()
 vim.keymap.set("n", "<leader>sf", ":Pick files<cr>")
 vim.keymap.set("n", "<leader><leader>", ":Pick buffers<cr>")
