@@ -28,8 +28,12 @@ vim.keymap.set('n', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 
 -- LSP and completion config
 
-vim.pack.add({"https://github.com/neovim/nvim-lspconfig"})
-vim.lsp.enable({ "lua_ls", "ruby_lsp", "gopls", "emmet_language_server" })
+vim.pack.add({ "https://github.com/neovim/nvim-lspconfig" })
+vim.lsp.config("html", {
+  filetypes = { "html", "templ", "erb" }
+})
+vim.lsp.enable({ "lua_ls", "ruby_lsp", "herb_ls", "gopls", "emmet_language_server", "html" })
+
 
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(event)
@@ -41,7 +45,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 vim.cmd("set completeopt+=noselect")
 
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, { desc = "Format buffer with LSP" })
+vim.keymap.set("n", "<leader>ef", ":w<cr>:!herb-format %<cr>", { desc = "Format ERB with Herb" })
 
 -- Plugins
 
@@ -49,11 +54,11 @@ vim.pack.add({ "https://github.com/vague2k/vague.nvim" })
 vim.cmd("colorscheme vague")
 vim.cmd(":hi statusline guibg=NONE")
 
-vim.pack.add({"https://github.com/mason-org/mason.nvim"})
+vim.pack.add({ "https://github.com/mason-org/mason.nvim" })
 require("mason").setup()
 vim.keymap.set("n", "<leader>m", ":Mason<cr>")
 
-vim.pack.add({"https://github.com/stevearc/oil.nvim"})
+vim.pack.add({ "https://github.com/stevearc/oil.nvim" })
 require("oil").setup()
 vim.keymap.set("n", "-", ":Oil<cr>")
 
@@ -83,7 +88,7 @@ vim.keymap.set("n", "<leader>sr", ":Pick resume<cr>")
 require("mini.notify").setup()
 vim.notify = require("mini.notify").make_notify()
 
-vim.pack.add({"https://github.com/lewis6991/gitsigns.nvim"})
+vim.pack.add({ "https://github.com/lewis6991/gitsigns.nvim" })
 require("gitsigns").setup({
   on_attach = function(bufnr)
     local gitsigns = require("gitsigns")
@@ -152,8 +157,7 @@ require("gitsigns").setup({
   end,
 })
 
-vim.pack.add({"https://github.com/folke/which-key.nvim"})
+vim.pack.add({ "https://github.com/folke/which-key.nvim" })
 vim.keymap.set("n", "<leader>?", function()
   require("which-key").show({ global = true })
 end, { desc = "Buffer local keymaps" })
-
