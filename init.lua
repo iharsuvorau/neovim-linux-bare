@@ -26,41 +26,50 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 vim.keymap.set('n', '<Esc>', ':nohlsearch<cr>')
 vim.keymap.set('n', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
+-- LSP and completion config
+
+vim.pack.add({"https://github.com/neovim/nvim-lspconfig"})
+vim.lsp.enable({ "lua_ls", "ruby_lsp", "gopls", "emmet_language_server" })
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(event)
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
+    if client:supports_method("textDocument/completion") then
+      vim.lsp.completion.enable(true, client.id, event.buf, { autotrigger = true })
+    end
+  end
+})
+vim.cmd("set completeopt+=noselect")
+
+vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+
 -- Plugins
 
 vim.pack.add({ "https://github.com/vague2k/vague.nvim" })
 vim.cmd("colorscheme vague")
 vim.cmd(":hi statusline guibg=NONE")
 
-vim.pack.add({
-  "https://github.com/mason-org/mason.nvim",
+vim.pack.add({"https://github.com/mason-org/mason.nvim"})
+require("mason").setup()
+vim.keymap.set("n", "<leader>m", ":Mason<cr>")
 
+vim.pack.add({"https://github.com/stevearc/oil.nvim"})
+require("oil").setup()
+vim.keymap.set("n", "-", ":Oil<cr>")
+
+vim.pack.add({
+  "https://github.com/nvim-lua/plenary.nvim",
+  "https://github.com/kdheepak/lazygit.nvim",
+})
+vim.keymap.set("n", "<leader>gg", ":LazyGit<cr>")
+
+vim.pack.add({
   "https://github.com/echasnovski/mini.ai",
   "https://github.com/echasnovski/mini.pick",
   "https://github.com/echasnovski/mini.surround",
   "https://github.com/echasnovski/mini.pairs",
   "https://github.com/echasnovski/mini.notify",
-
-  "https://github.com/stevearc/oil.nvim",
-
-  "https://github.com/neovim/nvim-lspconfig",
-
-  "https://github.com/nvim-lua/plenary.nvim",
-  "https://github.com/kdheepak/lazygit.nvim",
-
-  "https://github.com/lewis6991/gitsigns.nvim",
-
-  "https://github.com/folke/which-key.nvim",
 })
-
-require("mason").setup()
-vim.keymap.set("n", "<leader>m", ":Mason<cr>")
-
-require("oil").setup()
-vim.keymap.set("n", "-", ":Oil<cr>")
-
-vim.keymap.set("n", "<leader>gg", ":LazyGit<cr>")
-
 require("mini.ai").setup()
 require("mini.surround").setup()
 require("mini.pairs").setup()
@@ -74,6 +83,7 @@ vim.keymap.set("n", "<leader>sr", ":Pick resume<cr>")
 require("mini.notify").setup()
 vim.notify = require("mini.notify").make_notify()
 
+vim.pack.add({"https://github.com/lewis6991/gitsigns.nvim"})
 require("gitsigns").setup({
   on_attach = function(bufnr)
     local gitsigns = require("gitsigns")
@@ -142,24 +152,8 @@ require("gitsigns").setup({
   end,
 })
 
+vim.pack.add({"https://github.com/folke/which-key.nvim"})
 vim.keymap.set("n", "<leader>?", function()
   require("which-key").show({ global = true })
 end, { desc = "Buffer local keymaps" })
 
--- LSP keymaps
-
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
-
--- LSP and completion config
-
-vim.lsp.enable({ "lua_ls", "ruby_lsp", "gopls", "emmet_language_server" })
-
-vim.api.nvim_create_autocmd("LspAttach", {
-  callback = function(event)
-    local client = vim.lsp.get_client_by_id(event.data.client_id)
-    if client:supports_method("textDocument/completion") then
-      vim.lsp.completion.enable(true, client.id, event.buf, { autotrigger = true })
-    end
-  end
-})
-vim.cmd("set completeopt+=noselect")
