@@ -1,7 +1,11 @@
+-- https://github.com/nvim-treesitter/nvim-treesitter/blob/main/SUPPORTED_LANGUAGES.md
+
 vim.pack.add({
   { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" }
 })
-require("nvim-treesitter").install({ "html", "css", "go", "ruby", "javascript", "sql", "python" })
+
+require("nvim-treesitter").install({ "html", "css", "go", "ruby", "javascript", "sql", "python", "xml", "embedded_template" })
+
 -- vim.api.nvim_create_autocmd('FileType', {
 --   pattern = { 'html', 'css', 'ruby', 'go', 'javascript', 'sql', 'python' },
 --   callback = function()
@@ -13,4 +17,3 @@ require("nvim-treesitter").install({ "html", "css", "go", "ruby", "javascript", 
 --     vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 --   end,
 -- })
--- vim.treesitter.language.register("html", { "erb", "eruby" })

@@ -58,10 +58,5 @@ vim.keymap.set("n", "<leader>?", function()
 end, { desc = "Buffer local keymaps" })
 
 vim.pack.add({ "https://github.com/windwp/nvim-ts-autotag" })
-require("nvim-ts-autotag").setup({
-  aliases = {
-    eruby = "html",
-    erb = "html",
-  }
-})
+require("nvim-ts-autotag").setup({})
 
