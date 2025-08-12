@@ -10,10 +10,14 @@ require("mini.ai").setup()
 require("mini.surround").setup()
 require("mini.pairs").setup()
 require("mini.files").setup()
-vim.keymap.set("n", "<leader>f", function()
+vim.keymap.set("n", "\\", function()
   if not MiniFiles.close() then MiniFiles.open() end
 end)
-require("mini.pick").setup()
+require("mini.pick").setup({
+  mappings = {
+    choose_marked = "<C-CR>"
+  }
+})
 vim.keymap.set("n", "<leader>sf", ":Pick files<cr>")
 vim.keymap.set("n", "<leader><leader>", ":Pick buffers<cr>")
 vim.keymap.set("n", "<leader>sh", ":Pick help<cr>")
