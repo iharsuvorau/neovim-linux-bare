@@ -98,3 +98,5 @@ end, { desc = "Open yet another file picker in a dir" })
 -- require('fff').refresh_git_status()                 -- Refresh git status for the active file lock
 -- require('fff').find_files_in_dir(path)              -- Find files in a specific directory
 -- require('fff').change_indexing_directory(new_path)  -- Change the base directory for the file picker
+
+require("github-opener")
