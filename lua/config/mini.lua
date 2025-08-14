@@ -5,10 +5,12 @@ vim.pack.add({
   "https://github.com/echasnovski/mini.surround",
   "https://github.com/echasnovski/mini.pairs",
   "https://github.com/echasnovski/mini.notify",
+  "https://github.com/echasnovski/mini.icons",
 })
 require("mini.ai").setup()
 require("mini.surround").setup()
 require("mini.pairs").setup()
+require("mini.icons").setup()
 require("mini.files").setup()
 vim.keymap.set("n", "\\", function()
   if not MiniFiles.close() then MiniFiles.open() end
