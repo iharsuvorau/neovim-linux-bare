@@ -33,6 +33,8 @@ vim.keymap.set('n', '<leader>t', ':split +terminal<cr>', { desc = "Open terminal
 vim.keymap.set('n', '<Esc>', ':nohlsearch<cr>')
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+
 -- Plugins
 
 require("config.lsp")
