@@ -20,6 +20,12 @@ require("mini.pick").setup({
     choose_marked = "<C-CR>"
   }
 })
+vim.keymap.set("n", "|", function()
+  local buf_name = vim.api.nvim_buf_get_name(0)
+  local path = vim.fn.filereadable(buf_name) == 1 and buf_name or vim.fn.getcwd()
+  MiniFiles.open(path)
+  MiniFiles.reveal_cwd()
+end, { desc = "Open Mini Files" })
 vim.keymap.set("n", "<leader>sf", ":Pick files<cr>")
 vim.keymap.set("n", "<leader><leader>", ":Pick buffers<cr>")
 vim.keymap.set("n", "<leader>sh", ":Pick help<cr>")
