@@ -102,3 +102,24 @@ end, { desc = "Open yet another file picker in a dir" })
 -- require('fff').change_indexing_directory(new_path)  -- Change the base directory for the file picker
 
 require("github-opener")
+
+vim.pack.add({
+  "https://github.com/neovim/nvim-lspconfig",
+  "https://github.com/SmiteshP/nvim-navic",
+  "https://github.com/MunifTanjim/nui.nvim",
+  "https://github.com/nvim-telescope/telescope.nvim",
+  "https://github.com/SmiteshP/nvim-navbuddy",
+})
+require("nvim-navbuddy").setup({
+  lsp = { auto_attach = true }
+})
+vim.keymap.set("n", "<leader>p", function() require("nvim-navbuddy").open() end, { desc = "Open outline navigation" })
+
+vim.pack.add({ "https://github.com/hedyhli/outline.nvim" })
+require("outline").setup({
+  outline_window = {
+    width = 35,
+    relative_width = false
+  }
+})
+vim.keymap.set("n", "<leader>o", "<cmd>Outline<CR>", { desc = "Toggle Outline" })
