@@ -68,6 +68,8 @@ vim.pack.add({
 })
 vim.keymap.set("n", "<leader>gg", ":LazyGit<cr>")
 
+vim.pack.add({ "https://github.com/tpope/vim-fugitive" })
+
 vim.pack.add({ "https://github.com/folke/which-key.nvim" })
 vim.keymap.set("n", "<leader>?", function()
   require("which-key").show({ global = true })
