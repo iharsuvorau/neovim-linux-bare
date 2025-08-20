@@ -4,7 +4,7 @@ vim.lsp.config("html", {
   filetypes = { "html", "templ", "eruby" }
 })
 
-vim.lsp.enable({ "lua_ls", "ruby_lsp", "herb_ls", "gopls", "emmet_language_server", "html", "ts_ls" })
+vim.lsp.enable({ "lua_ls", "ruby_lsp", "herb_ls", "gopls", "emmet_language_server", "html", "ts_ls", "clangd" })
 
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(event)
