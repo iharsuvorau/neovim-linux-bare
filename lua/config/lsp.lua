@@ -20,6 +20,8 @@ local root_dir = require('jdtls.setup').find_root(root_markers)
 
 -- eclipse.jdt.ls stores project specific data within a folder. If you are working with multiple different projects, each project must use a dedicated data directory. This variable is used to configure eclipse to use the directory name of the current project found using the root_marker as the folder for project specific data.
 local workspace_folder = home .. "/.local/share/eclipse/" .. vim.fn.fnamemodify(root_dir, ":p:h:t")
+local lombok_path_mac = home .. '/.local/share/eclipse/lombok.jar'
+local lombok_path_linux = home .. '/.local/share/nvim-dev/mason/packages/jdtls/lombok.jar'
 
 vim.lsp.config("jdtls", {
   cmd = {
@@ -33,12 +35,18 @@ vim.lsp.config("jdtls", {
     '--add-modules=ALL-SYSTEM',
     '--add-opens', 'java.base/java.util=ALL-UNNAMED',
     '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
-    '-javaagent:' .. home .. '/.local/share/eclipse/lombok.jar',
-    '-Xbootclasspath/a:' .. home .. '/.local/share/eclipse/lombok.jar',
-    -- The jar file is located where jdtls was installed. This will need to be updated to the location where you installed jdtls
-    '-jar', vim.fn.glob('/opt/homebrew/opt/jdtls/libexec/plugins/org.eclipse.equinox.launcher_*.jar'),
-    -- The configuration for jdtls is also placed where jdtls was installed. This will need to be updated depending on your environment
-    '-configuration', '/opt/homebrew/opt/jdtls/libexec/config_mac_arm',
+
+    -- Mac
+    -- '-javaagent:' .. lombok_path_mac,
+    -- '-Xbootclasspath/a:' .. lombok_path_mac,
+    -- '-jar', vim.fn.glob('/opt/homebrew/opt/jdtls/libexec/plugins/org.eclipse.equinox.launcher_*.jar'),
+    -- '-configuration', '/opt/homebrew/opt/jdtls/libexec/config_mac_arm',
+
+    -- Linux
+    '-javaagent:' .. lombok_path_linux,
+    '-Xbootclasspath/a:' .. lombok_path_linux,
+    '-jar', vim.fn.glob(home .. '/.local/share/nvim-dev/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar'),
+    '-configuration', home .. '/.local/share/nvim-dev/mason/share/jdtls/config',
 
     -- Use the workspace_folder defined above to store data for this project
     '-data', workspace_folder,
