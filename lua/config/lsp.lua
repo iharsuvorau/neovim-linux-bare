@@ -57,7 +57,7 @@ vim.lsp.config("jdtls", {
 -- end of Java Configuration --
 -------------------------------
 
-vim.lsp.enable({ "lua_ls", "ruby_lsp", "herb_ls", "gopls", "emmet_language_server", "html", "ts_ls", "clangd", "jdtls" })
+vim.lsp.enable({ "lua_ls", "ruby_lsp", "herb_ls", "gopls", "emmet_language_server", "html", "ts_ls", "clangd", "jdtls", "pylsp" })
 
 vim.api.nvim_create_autocmd("LspAttach", {
   callback = function(event)
